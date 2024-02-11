@@ -1,5 +1,5 @@
 {
-  "name": "date-converter",
+  "name": "@peimn/date-converter",
   "version": "0.0.1",
   "description": "This package helps converting various types of calendars together",
   "main": "index.js",
