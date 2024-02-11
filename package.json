@@ -18,5 +18,9 @@
     "lint": "tslint --project tsconfig.json",
     "prepublish": "npm run compile",
     "test": "vitest"
+  },
+  "engines" : {
+    "npm" : ">=8.0.0",
+    "node" : ">=16.0.0"
   }
 }
