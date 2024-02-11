@@ -1,0 +1,22 @@
+{
+  "name": "date-converter",
+  "version": "0.0.1",
+  "description": "This package helps converting various types of calendars together",
+  "main": "index.js",
+  "repository": "https://github.com/peimn/date-converter.git",
+  "author": "Peiman Nourani",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "tslint": "^6.1.3",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.2"
+  },
+  "scripts": {
+    "compile": "tsc --declaration",
+    "lint": "tslint --project tsconfig.json",
+    "prepublish": "npm run compile",
+    "test": "vitest"
+  }
+}
