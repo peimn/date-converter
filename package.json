@@ -1,6 +1,6 @@
 {
   "name": "calverter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This package helps converting various types of calendars together",
   "main": "index.js",
   "repository": "https://github.com/peimn/date-converter.git",
@@ -19,8 +19,8 @@
     "prepublish": "npm run compile",
     "test": "vitest"
   },
-  "engines" : {
-    "npm" : ">=8.0.0",
-    "node" : ">=16.0.0"
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
   }
 }
