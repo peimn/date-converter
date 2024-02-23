@@ -11,7 +11,7 @@ class ConverterSpec {
 
     testGregorianToHijri(): void {
         const asserted: string = "1444-09-22";
-        const actual: string = Converter.GregorianToHijri("2023-04-13", "YYYY-MM-DD");
+        const actual: string = Converter.GregorianToHijri("2023-4-13", "YYYY-MM-DD");
         expect(actual).toBe(asserted);
     }
 

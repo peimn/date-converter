@@ -51,29 +51,34 @@ export class Converter {
         return Math.floor(floatNum + 0.0000001);
     }
 
-    public static ConstructDayMonthYear(date: string, format: string): void {
+    public static ConstructDayMonthYear(date: string, format: string = "YYYY-MM-DD"): void {
         this.Day = "";
         this.Month = "";
         this.Year = "";
         if (date !== null) {
             format = format.toUpperCase();
+            const fRegexp: RegExp = /([A-Z]+)/g;
+            const fMatches: IterableIterator<RegExpMatchArray> = format.matchAll(fRegexp);
+
+            const dRegexp: RegExp = /([0-9]+)/g;
+            const dMatches: IterableIterator<RegExpMatchArray> = date.matchAll(dRegexp);
+
+            const fMatchesAr: RegExpMatchArray[] = [...fMatches];
+            const dMatchesAr: RegExpMatchArray[] = [...dMatches];
+
             const formatAr: string[] = format.split('');
             const srcDateAr: string[] = date.split('');
-            for (let i = 0; i < formatAr.length; i++) {
-                if (srcDateAr[i] !== undefined) {
-                    switch (formatAr[i]) {
-                        case "D":
-                            this.Day += srcDateAr[i];
-                            break;
-                        case "M":
-                            this.Month += srcDateAr[i];
-                            break;
-                        case "Y":
-                            this.Year += srcDateAr[i];
-                            break;
-                    }
+            fMatchesAr.forEach((match, index) => {
+                if (match[0].split('').every(char => char === 'Y')) {
+                    this.Year = dMatchesAr[index][0];
                 }
-            }
+                if (match[0].split('').every(char => char === 'M')) {
+                    this.Month = dMatchesAr[index][0];
+                }
+                if (match[0].split('').every(char => char === 'D')) {
+                    this.Day = dMatchesAr[index][0];
+                }
+            })
         }
     }
 
@@ -83,9 +88,9 @@ export class Converter {
         let mmonth: number = parseInt(this.Month, 10);
         let yyear: number = parseInt(this.Year, 10);
         let jday: number = 0;
-        let ld:number = 0;
-        let nd:number = 0;
-        let jdd:number = 0;
+        let ld: number = 0;
+        let nd: number = 0;
+        let jdd: number = 0;
         if (yyear > 1700) {
             if ((yyear > 1582) || ((yyear === 1582) && (mmonth > 10)) || ((yyear === 1582) && (mmonth === 10) && (dday > 14))) {
                 jday = this.intPart((1461 * (yyear + 4800 + this.intPart((mmonth - 14) / 12))) / 4) + this.intPart((367 * (mmonth - 2 - 12 * (this.intPart((mmonth - 14) / 12)))) / 12) - this.intPart((3 * (this.intPart((yyear + 4900 + this.intPart((mmonth - 14) / 12)) / 100))) / 4) + dday - 32075;
@@ -106,13 +111,13 @@ export class Converter {
     }
 
     public static JulianToHijri(jdN: number): string {
-        jdN= jdN- 1948440 + 10632;
-        const n: number = this.intPart((jdN- 1) / 10631);
-        jdN= jdN- 10631 * n + 354;
+        jdN = jdN - 1948440 + 10632;
+        const n: number = this.intPart((jdN - 1) / 10631);
+        jdN = jdN - 10631 * n + 354;
         const j: number = ((this.intPart((10985 - jdN) / 5316)) * (this.intPart((50 * jdN) / 17719))) + ((this.intPart(jdN / 5670)) * (this.intPart((43 * jdN) / 15238)));
-        jdN= jdN- ((this.intPart((30 - j) / 15)) * (this.intPart((17719 * j) / 50))) - ((this.intPart(j / 16)) * (this.intPart((15238 * j) / 43))) + 29;
+        jdN = jdN - ((this.intPart((30 - j) / 15)) * (this.intPart((17719 * j) / 50))) - ((this.intPart(j / 16)) * (this.intPart((15238 * j) / 43))) + 29;
         const mM: number = this.intPart((24 * jdN) / 709);
-        const dD: number = jdN- (this.intPart((709 * mM) / 24));
+        const dD: number = jdN - (this.intPart((709 * mM) / 24));
         const yY: number = 30 * n + j - 30;
         return `${yY}-${String("00" + mM).slice(-2)}-${String("00" + dD).slice(-2)}`;
     }
